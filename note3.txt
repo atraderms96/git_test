@@ -1,0 +1,2168 @@
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+The Pi's 3.5mm jack includes both audio and composite video, 
+ USB audio
+ 
+audio_pwm_mode=2
+to /boot/config.txt
+
+
+(Add these 2 lines at the end of the file)
+
+disable_audio_dither=1 audio_pwm_mode=2
+
+
+, the snap on ferrite cores did absolutely nothing.
+
+Mpow 接地迴路噪聲隔離器，適用汽車音響/家用立體音響系統 3.5公釐音源線（黑色）
+Mpow
+4.5 顆星，最高 5 顆星    3,965等級  | 164 個問題已回覆
+目前無法使用 
+我們不知道該商品何時或何時會恢復庫存。
+消除噪音： 完全消除噪音。這種聲音由接地迴路產生，原因是有一些汽車揚聲器/家用立體音響系統在使用藍牙接收器時，音源和揚聲器使用相同的電源。
+工作原理： 此噪音隔離器的工作原理是通過消除某些汽車揚聲器/家用立體聲系統中的電流噪音，播放清晰的語音/音樂。
+相容型號： 當接地問題持續存在時，適用於任何具有 3.5 公釐音頻插孔的便攜式設備，適合您的汽車音響系統/家用立體音響。 也可以與您汽車音響系統/家用立體音響中的藍牙接收器/藍牙免提車載套件一起使用。
+小巧便攜： 袖珍輕盈（2.01×0.59×0.59 英寸，0.99 盎司）（約 5.11×1.50×1.50 公分，約 28.07 公克），這款小配件不會佔用太大空間，可以輕鬆攜帶。
+注意事項： 接地迴路隔離器連接到車上的 AUX 插孔，以消除噪音。當噪音隔離器和接地迴路噪音隔離器一起使用時，您將可享受高品質聲音。
+
+
+
+//////////////////////////////////////
+
+git clone git://git.qemu-project.org/qemu.git
+cd qemu
+sudo dpkg --add-architecture armhf
+sudo apt-get update
+sudo apt-get install -y g++-arm-linux-gnueabihf flex bison libglib2.0-dev:armhf # and possibly some other lib*-dev:armhf deps
+./configure --cross-prefix=arm-linux-gnueabihf- --prefix=/usr/local --target-list="i386-softmmu i386-linux-user x86_64-softmmu x86_64-linux-user " --enable-linux-user --enable-user --enable-system
+make
+sudo make install
+# then copy installed /usr/local contents to the Pi
+
+/////////////////////////////
+
+rpi3 ~$ apt list inkscape
+Listing... Done
+inkscape/stable 0.92.1-1 armhf
+
+
+
+
+GRBL controller 3.6.1 + firmware
+支援4軸的GRBL控制
+
+
+a 電鑽/b電動雕刻機/ c CNC主軸馬達
+a/b
+1精度低
+2溫度高
+3轉速不夠
+4密封性差，進塵
+5不適合長時間連續性運轉
+6干擾大(馬達運轉產生的火花、電磁效應會干擾步進馬達的驅動電路造成失步)
+7噪音大
+
+
+抗干擾磁環
+ 加在USB的傳輸線上的二端各加一個
+步進馬達的驅動電源上也加一個
+
+玻璃纖維板
+
+主軸馬達標榜著主軸徑向跳動：0.01-0.03mm左右，裝上去之後真的差很多，運轉聲音非常的小、也不會像之前那個馬達會發生很大的振動，
+
+EasyDriver步進馬達驅動模組
+
+TB6560步進馬達驅動器最基本一定要設定的地方：
+SW3要ON(開關往上扳，表示工作電流在0.5)
+S3、S4要ON(開關往上扳，表示設定為8細分)
+
+
+3mm的壓克力板
+
+鋁板
+
+CNC成型刀/一般的雕刻刀
+ CNC成型刀 刀尾是有切刃的，所以當Z軸下來的時候刀才會往下切(鑽)
+
+
+這個5mm的扳手總共切了快5個半小時才整個切好，設定的參數：
+進給(F)：30
+每切一次深度：0.2mm
+扳手長度：150mm
+扳手寬度：23mm
+
+
+0.2mm、0.5mm及尖刀0.1mm的刀具要來刻看看PCB電路板
+
+
+Z軸的螺桿滑動器 黃油潤滑
+
+浮雕，不過這次木塊的材料紋路不是很搭
+
+硬碟砂輪機 粗磨 細磨
+
+限位環 CNC雕刻刀
+
+1 500W的主軸，空轉時最大轉速12000RPM
+
+2 CNC雕刻機用德國製的Kress 1050 FME
+Nominal rated input    1.050 Watt 220v
+No-load speed            10.000 – 29.000 1/min. 
+Tool weight                1,7 kg
+
+GRBL的設定
+ G-Code裡的F速度
+$110=200.000 (x max rate, mm/min)         X軸最大的F進給速度
+$111=200.000 (y max rate, mm/min)         Y軸最大的F進給速度
+$112=200.000 (z max rate, mm/min)         Z軸的最的F進給速度
+$120=50.000 (x accel, mm/sec^2)             X軸加速度
+$121=50.000 (y accel, mm/sec^2)             Y軸加速度
+$122=50.000 (z accel, mm/sec^2)             Z軸加速度
+$130=225.000 (x max travel, mm)             X軸移動最大範圍(軟體限位，必須要將$20值設為1，這設定才有用)
+$131=125.000 (y max travel, mm)             Y軸移動最大範圍(軟體限位，必須要將$20值設為1，這設定才有用)
+$132=170.000 (z max travel, mm)             Z軸移動最大範圍(軟體限位，必須要將$20值設為1，這設定才有用)
+
+
+GRBL來執行G-Code時，發生error: Line overflow的錯誤
+執行的命令超過GRBL所允許的精度，只要將雙精度換成單精度即可
+
+壓板 固定鋁板
+
+原先Z軸的承載板是用玻璃纖維板來作的，後來一次因為在铣切8mm鋁板時，發現這玻璃纖維板還是太軟了，在走刀時會稍微變形並產生震刀
+6061的8mm厚的鋁合金
+
+斷的铣刀上都沾粘鋁
+鋁材質的特性就是熔點低容易因為熱而沾粘上刀子
+
+1 大量的切削液下去沖將屑快速沖走然後又達到降溫。
+2 用吹氣的方式來改善刀具沾粘的問題，最後買了一台小型的空壓機來改裝
+
+	
+CNC雕刻機的平底尖刀的刀尖常一個不小心就斷了
+
+
+震一般簡單的解決方法就是對主軸轉速作提高或降低、降低進給(F)刀的情形，我的震刀發生的狀況是剛開始銑切時都沒問題，銑到某一定的深度時(大約2mm深左右)，在某一段就會發生震刀，之前也有發生過一次，結果沒一會就斷刀了。
+
+Z軸在往下降低高度時，發現步進馬達明明在轉動但Z軸螺母上的軸座居然會有一小段沒動。
+聯軸器上的螺絲轉緊後，Z軸就恢復正常了
+
+CNC集塵頭
+
+
+使用Arduino時
+將電源換成移動源，這移動電源有很多種，最簡單的就是接上9V的方型電池，
+Arduino的電源連接的位置是一定要接到「RAW」這腳位上，不可以接到原VCC的腳位，因為RAW這腳位是會將電源經過轉換成5V
+
+ print a list of all available block devices:
+lsblk
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    1  491M  0 disk 
+└─sda1        8:1    1  490M  0 part /media/pi/B1E0-914D
+mmcblk0     179:0    0 59.5G  0 disk 
+├─mmcblk0p1 179:1    0  256M  0 part /boot
+└─mmcblk0p2 179:2    0 59.2G  0 part /
+
+
+Securely Wipe Up the Data
+sudo dd if=/dev/zero of=/dev/sdb bs=4096 status=progress
+
+
+ display the partition table.
+$ sudo fdisk -l
+
+
+# fdisk /dev/sdb(usb)
+-->d
+--> n    (Create partition)
+．．．．．．．
+--> w
+
+
+format the USB drive in FAT32 using command:
+$ sudo mkfs.vfat /dev/sdb1
+ or
+$ sudo mkfs.vfat -F32 /dev/sdb1
+
+sudo mkfs.ext4 -F /dev/sdb1
+
+
+////////////
+text to gcode
+inkscape 4.8 / text / object to path / save as gcode
+
+image to gcode
+  trace bitmap / delete org image / save to gcode
+
+///////////////
+https://electricdiylab.com/grbl-cnc-shield-z-axis-servo-migrbl/
+
+grbl-cnc-shield-
+z-axis-servo-
+migrbl
+Inkscape software 0.48.5 version
+
+////////////////////////
+How to Make a CNC Drawing Machine at home
+https://www.youtube.com/watch?v=xnZI0ovzb4c
+
+ Benbox and File Hex : http://www.mediafire.com/file/hb22rv2...
+- A4988 Driver Module : https://goo.gl/41Ay6X
+- UNO R3 Arduino : https://goo.gl/NjHwiD
+- Arduino CNC Shield V3 : https://goo.gl/v6AbEw
+- MG 90S Micro Servo : https://goo.gl/TpdML2
+
+
+
+
+1	2020  鋁擠型  300mm	2
+2	2020  鋁擠型  200mm	2
+3	20100工作檯面 180mm*100mm	1
+4	8mm光軸(300mm)	2
+5	8mm螺桿 300mm 導程8	1
+6	SK8 光軸固定架	4
+7	立式滾珠軸承座 內徑8 KP08	1
+8	直線軸承滑塊 特殊SCV8UU(4.8mm直穿)	4
+9	特殊  T8 螺母轉換座(4.8mm直穿)	1
+10	全銅製螺母 導程8	1
+11	不銹鋼內六角M4*35	4
+12	不銹鋼內六角M4* 20	8
+13	M4 (滑塊螺母或船型螺母)	12
+14	不銹鋼內六角M5*10 	12
+15	M5 (滑塊螺母或船型螺母)	12
+16	數字輪	1
+17	內置 L型 連接件 	4
+A1	42步進馬達 亞克力 固定板	1
+
+	　
+B 垂直軸零件	　
+　	品名	數量
+18	2020  鋁擠型  200mm	2
+19	2060工作檯面 150mm*60mm	1
+20	8mm光軸(240mm)	2
+21	8mm螺桿 240mm 導程8	1
+22	SK8 光軸固定架	4
+23	立式滾珠軸承座 內徑8 KP08	1
+24	直線軸承滑塊 特殊SCV8UU(4.8mm直穿)	2
+25	特殊  T8 螺母轉換座(4.8mm直穿)	1
+26	全銅製螺母 導程8	1
+27	2040角件	4
+28	不銹鋼內六角M4*35	4
+29	不銹鋼內六角M4* 20	4
+30	不銹鋼內六角M5*10 	10
+31	M5 (滑塊螺母或船型螺母)	10
+32	不銹鋼內六角M4* 10	16
+33	M4 (滑塊螺母或船型螺母)	16
+34	M4 (滑塊螺母或船型螺母)	8
+35	
+數字輪
+
+1
+36	
+42步進馬達 亞克力 固定板
+
+1
+B1　
+
+B2
+
+5-8彈性聯軸器*1
+
+42步進馬達(選配)
+
+1　
+
+curl https://processing.org/download/install-arm.sh | sudo sh
+
+
+
+
+////////////////////////////
+
+
+Format a USB-connected drive 
+
+Get the drive’s path using 
+ sudo fdisk -l
+
+Enter fdisk to edit the disk’s partition table: 83 
+ sudo fdisk /dev/sda*
+
+Enter the following options when prompted:
+  n, p, 1, <enter>, <enter>, w
+
+Format the partition: 
+ sudo mkfs -t ext4 /dev/sda1*
+
+Mount the partition: 
+ sudo mount /dev/sda1* /ssd
+
+
+
+sudo apt-get install unrar-free 
+
+// write speed test
+dd if=/dev/urandom of=sam.txt bs=128M count=1
+0+1 records in
+0+1 records out
+33554431 bytes (34 MB, 32 MiB) copied, 1.44654 s, 23.2 MB/s
+
+
+// Unzip, extract and uncompress files in Terminal
+
+
+.tar 
+ tar xvf filename.tar
+
+.tar.gz, .tgz, .tar.bz 
+ tar xzvf filename.tar.gz
+
+.gz
+ gunzip filename.gz
+
+.bz, .bz2 
+ bunzip2 filename.bz2
+
+.xz 
+ unlzma filename.xz
+
+.zip 
+ unzip filename.zip
+
+.7z 
+ sudo apt-get install p7zip-full 
+ 7z x filename.7z
+
+.rar 
+ sudo apt-get install unrar-free 
+ unrar x filename.rar
+
+//或是啟用/停用內建的 WiFi 裝置。
+sudo ip link set eth0/wlan0 up/down
+
+
+
+ln -s  /media/pi/675b9da4-1032-416f-b7bf-14a8e9d48e14/rolex rolex
+
+
+備份到b,若b的檔案比較新則不更新
+local backup , files below a to b
+rsync -zavh --delete a/ b
+
+to remote
+rsync -zarvh --delete /home/pkumar/techi root@192.168.1.29:/opt
+
+test run with simu
+rsync -zavh --dry-run --delete a/ b
+
+View the difference in files & directories
+rsync -zavhi a/ b
+
+
+
+
+
+
+# 將 myfile 的擁有者改為 pi
+sudo chown -R pi:pi myfile
+
+
+
+這幾天玩樹莓派的心得
+安裝rpi3+ image
+	原廠的安裝導引noob裝ubuntu mate 會卡在最後100%，鬼打強。
+	ubuntu mate不合rpi3+，浪費了幾個小時，一直重燒image。
+	linux的發展還是一樣，各自為政，版本很亂，而且版本效能差異很大，
+		一些亂出的版本比不過二十年前的xp，一直lag，能用嗎？唉！
+
+
+
+raspberry3中文輸入
+	gcin安裝完，一直出現找不到lib的訊息
+	scim沒有liu table
+
+	//ok download
+sudo apt-get install im-config fcitx fcitx-tabel-boshiamy
+	fcitx
+		sudo apt-get install fcitx-table-boshiamy
+		在fcitx裡設定嘸蝦米在前面
+		輸入法切換為fcitx  im-config?
+   // terminal  im-config ,reboot
+
+   // lx terminal的設定檔
+   .config/lxterminal/lxterminal.conf 
+
+
+
+音效 
+	如果是外接喇八，聲音輸出設定為analog，否則是hdmi
+
+安裝busybox
+ sudo apt-get install busybox
+
+ sudo mkdir /mnt/ramdisk
+ 
+ sudo apt-get install bc // httpd使用的bash命令
+
+tab選擇不同檔案
+ put the following in .bashrc or .bash_login (/home/pi/.bashrc)
+bind '"\t":menu-complete'
+
+讓隨身碟ntfs能讀寫
+ 安裝ntfs-3g
+
+openscad cura arduino inkscape camotics
+
+
+chronium
+ google dictionary
+
+//隔天開機
+沒開機畫面，怪怪的，重開電源幾次都這樣，由中華電信ap看wifi有連進來。
+ 	想由ssh進去看，不過sshd沒開，想由其他sd卡的kali linux之類看看是螢幕還是那裡問題。
+	win7要燒其他image，不過插上usb sd卡，都無法辨識，提示要格式化，但格式化總是失敗。
+	試了8G,16G,32G，都是一樣，真的有鬼了。開始在網上看raspberry pi no hdmi的資料，
+	其中有提到修改config.txt的。
+	原本的raspbian進不去，進不去，在windows上也看不到，真是糟糕。
+	結果在其他手機加上sd能看到，試著修改 config.txt，重開，解析度變很小，總算能看到了畫面了，
+	不用報癈了。再參考其他人的config.txt，可以不用畫面很粗糙了。
+	不過關機power off後，還是沒畫面，ssh進去後reboot就正常了，奇怪。
+	
+
+	原來把 hdmi_force_hotplug=1 就可以，搞了半天，真是他媽的混帳。
+
+//建議
+ hdmi_drive=2 //2 HDMI mode / 1 DVI
+ hdmi_group=2   // 2 DMT /1   CEA
+ hdmi_mode=16   //1024x768   60 Hz 
+ // hdmi_mode=35   1280x1024  60 Hz //hdmi_mode=47   1440x900   60 Hz
+hdmi_mode=73   1920x1440  60 Hz  
+
+// asus 228 // raspbian 1920x1080     60.00*+
+
+hdmi_safe=1 >>
+{hdmi_force_hotplug=1
+hdmi_ignore_edid=0xa5000080
+config_hdmi_boost=4
+hdmi_group=2
+hdmi_mode=4
+disable_overscan=0
+overscan_left=24
+overscan_right=24
+overscan_top=24
+overscan_bottom=24}
+
+
+查看系統所支持分辨率的命令 
+xrandr
+
+iwconfig 看一下無線網路的狀況
+
+//檔案1
+$/etc/wpa_supplicant/wpa_supplicant.conf 
+原來只有第一行，在後面加上幾行設定：
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=TW
+
+network={
+   scan_ssid=1
+   ssid="MyHome"
+   psk="ceiling4895"
+}
+
+// 檔案2
+ /etc/network/interfaces
+加上以下這段文字：
+auto lo
+iface lo inet loopback
+
+iface eth0 inet manual
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+allow-hotplug wlan1
+iface wlan1 inet manual
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+
+重新啟動無線網路
+$ sudo ifup wlan0
+
+
+vi指令
+	檔案最後面:$
+	檔案最前面:0
+
+	undo u
+	redo ctrl+z
+	暫時離開 ctrl+z
+
+	開檔案 :e test.txt，
+	跳到第幾行 :5
+
+	在行尾開始輸入文字 A
+	在行首開始輸入文字 I
+
+	游標下一行開始輸入文字 o
+
+	區塊設定 v  左右 hl   上下 kj    區塊複製 y 
+	貼上 p
+
+
+
+
+
+
+
+
+
+	查詢套件是否有安裝  dpkg -l gcin
+
+
+	更新root密碼 sudo passwd root
+//////////////////////////////////////
+	查詢目錄空間2層  du -ahd 2
+//////////////////////////////////////
+把sd card備份
+sudo dd if=/dev/??? of=pi_0207.img bs=1m // bs一次多少資料
+//bs block size // 512 bytes
+// 從 fdisk -l /dev/sda1 中找出來
+Disk /dev/sda1: 6.3 GiB, 6710886400 bytes, 13107200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+
+//////////////////////////////////////
+sudo raspi-config
+// 鍵盤 指定為English (US)
+
+//////////////////////////////////////
+關機
+sudo shutdown -h now / halt
+
+//////////////////////////////////////
+關機
+安裝 vsftpd 軟體
+
+$ sudo apt-get install vsftpd
+
+修改 vsftpd 設定檔 (/etc/vsftpd.conf)
+
+# sudo nano /etc/vsftpd.conf  
+anonymous_enable=NO  (不允許匿名登入)
+local_enable=YES  (允許本地端, 即樹莓派上可使用 FTP 伺服器)
+write_enable=YES  (允許檔案寫入)
+
+編輯完畢按 Ctrl+O (Enter) 存檔, 再按 Ctrl+X 跳出 Nano 即可.
+
+4. 重新啟動 vsftpd
+
+$ sudo service vsftpd restart 
+
+
+//////////////////////////////////////
+ discover the storage devices c
+
+$ lsblk
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda           8:0    0 149.1G  0 disk 
+├─sda1        8:1    0  48.5G  0 part 
+└─sda2        8:2    0  96.3G  0 part 
+mmcblk0     179:0    0   7.5G  0 disk 
+├─mmcblk0p1 179:1    0   50MB  0 part 
+└─mmcblk0p2 179:2    0     2G  0 part
+
+
+//////////////////////////////////////
+Resizing
+
+sudo umount /dev/mmcblk0
+
+sudo parted /dev/mmcblk0 //examine the card:
+ (parted) unit chs
+ (parted) print
+ Disk /dev/mmcblk0: 121535,3,31
+ Sector size (logical/physical): 512B/512B
+ BIOS cylinder,head,sector geometry: 121536,4,32.  Each cylinder is 65.5kB.
+ Partition Table: msdos
+ 
+ Number  Start      End         Type     File system     Flags
+  1      16,0,0     1215,3,31   primary  fat32           lba
+  2      1232,0,0   26671,3,31  primary  ext4
+  3      26688,0,0  29743,3,31  primary  linux-swap(v1)
+// card's maximum cylinder is at 121535.
+
+  // move Swap //(121535 - ( 29743 - 26688)) -1 = 118479
+(parted) move 3 118479,0,0 
+
+
+Expand the partition
+(parted) rm 2
+(parted) mkpart primary 1232,0,0 118478,3,31
+(parted) quit
+
+Clean and grow the file system
+sudo e2fsck -f /dev/mmcblk0p2
+sudo resize2fs /dev/mmcblk0p2
+
+check disk space
+df -h
+ Filesystem            Size  Used Avail Use% Mounted on
+ tmpfs                  94M  4.0K   94M   1% /lib/init/rw
+ udev                   10M  168K  9.9M   2% /dev
+ tmpfs                  94M     0   94M   0% /dev/shm
+ rootfs                7.1G  1.3G  5.4G  20% /
+ /dev/mmcblk0p1         75M   28M   48M  37% /boot
+
+
+
+//////////////////////////////////////
+Manually resizing the SD card on Raspberry Pi
+You can also resize the partitions of the SD card that your Pi is running on.
+
+First you need to change the partition table with fdisk. You need to remove the existing partition entries and then create a single new partition than takes the whole free space of the disk. This will only change the partition table, not the partitions data on disk. The start of the new partition needs to be aligned with the old partition!
+
+Start fdisk:
+
+sudo fdisk /dev/mmcblk0
+Then delete partitions with d and create a new with n. You can view the existing table with p.
+
+p to see the current start of the main partition
+d, 3 to delete the swap partition
+d, 2 to delete the main partition
+n p 2 to create a new primary partition, next you need to enter the start of the old main partition and then the size (enter for complete SD card). The main partition on the Debian image from 2012-04-19 starts at 157696, but the start of your partition might be different. Check the p output!
+w write the new partition table
+Now you need to reboot:
+
+ sudo shutdown -r now
+After the reboot you need to resize the filesystem on the partition. The resize2fs command will resize your filesystem to the new size from the changed partition table.
+
+sudo resize2fs /dev/mmcblk0p2
+This will take a few minutes, depending on the size and speed of your SD card.
+
+When it is done, you can check the new size with:
+
+df -h
+
+//////////////////////////////////////
+
+how to know file system on disk/sd card ...
+1 mount
+
+
+//////////////////////////////////////
+設定網路ip
+
+sudo vi /etc/dhcpcd.conf 
+
+interface eth0
+static ip_address=192.168.1.55
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
+
+//////////////////////////////////////
+manual set ssh
+sudo apt-get install ssh
+sudo /etc/init.d/ssh start
+
+// exec on boot
+sudo update-:rc.d ssh defaults
+
+// ssh client
+ssh pi@192.168.1.33
+//////////////////////////////////////
+
+VNC Virtual Network Computing
+
+sudo apt-get update
+sudo apt-get install tightvncserver
+sudo tightvncserver
+vncserver :1
+
+//手機設定開機執行
+vi /etc/init.d/vncboot
+#!/bin/sh
+#/etc/init.d/vncboot
+USER=root HOME=/root
+export USER HOME
+echo "starting VNC Server"
+/usr/bin/vncserver :0 -geometry 1280x800 -depth 16 -pixelformat rgb565
+exit 0
+
+sudo chmod 755 /etc/init.d/vncboot
+sudo update-rc.d vncboot defaults
+
+//////////////////////////////////////
+VNC client
+
+apt-get install xtightvncviewer
+xtightvncviewer
+
+Server:
+Double click the ReadVNC icon in the notification area of the taskbar (bottom right hand corner of your Desktop). This should show you the RealVNC configuration window. 
+ Click the 'Configure' button. 
+Make sure Authentication is set to 'VNC Password'.
+Click the 'Configure' button in the Password. Enter a new password in there, then Apply your settings. 
+
+xtightvncviewer 192.168.1.55
+//////////////////////////////////////
+Install deb file on Raspberry Pi
+sudo dpkg -i /var/cache/apt/archives/partial/xxxx
+
+// search packages
+//https://www.debian.org/distrib/packages
+
+//////////////////////////////////////
+How to install Linux / UNIX *.tar.gz tarball files
+
+ 1: Uncompress tarball
+To uncompress them, execute the following command(s) depending on the extension:
+$ tar zxf file.tar.gz
+$ tar zxf file.tgz
+$ tar jxf file.tar.bz2
+$ tar jxf file.tbz2
+
+Now change directory
+$ ls
+$ cd path-to-software/
+
+# 2: Build and install software
+Generally you need to type 3 commands as follows for building and compiling software:
+# ./configure
+# make
+# make install
+
+Where,
+
+./configure will configure the software to ensure your system has the necessary functionality and libraries to successfully compile the package
+make will compile all the source files into executable binaries.
+Finally, make install will install the binaries and any supporting files into the appropriate locations.
+
+//////////////////////////////////////
+USB大容量存儲
+  Flash 驅動器，外部硬碟，SD卡
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+udev 包含 user space daemon(udevd)和工具程式 udevinfo(或 udevadm)，
+
+udev 是 Linux kernel 2.6 系列的設備管理器。
+它主要的功能是管理 /dev 目錄底下的設備節點。
+它同時也是用來接替 devfs 及 hotplug 的功能，這意味著它要在添加/刪除硬件時處理 /dev 目錄以及所有用戶空間的行為，包括加載 firmware 時。
+
+
+//////////////////////////////////////
+加入新硬體的流程
+
+確認硬體資訊。
+	lsusb
+	dmesg
+[    8.417357] sd 1:0:0:0: [sda] Attached SCSI removable disk
+[    8.583801] sr0: scsi-1 drive
+[    8.591172] cdrom: Uniform CD-ROM driver Revision: 3.20
+[    8.681129] sr 0:0:0:0: Attached scsi generic sg0 type 5
+[    8.698176] sr 0:0:0:0: Attached scsi CD-ROM sr0
+
+
+將 sr0 掛載起來
+pi@raspberrypi ~ $ ls -al /dev/disk/by-id/
+total 0
+drwxr-xr-x 2 root root 140 Dec 24 12:31 .
+drwxr-xr-x 6 root root 120 Jan  1  1970 ..
+lrwxrwxrwx 1 root root  13 Jan  1  1970 memstick-SU16G_0x27885644 -> ../../mmcblk0
+lrwxrwxrwx 1 root root  15 Dec 24 12:28 memstick-SU16G_0x27885644-part1 -> ../../mmcblk0p1
+lrwxrwxrwx 1 root root  15 Dec 24 12:28 memstick-SU16G_0x27885644-part2 -> ../../mmcblk0p2
+lrwxrwxrwx 1 root root   9 Dec 24 12:38 usb-HUAWEI_Mass_Storage-0:0 -> ../../sr0
+lrwxrwxrwx 1 root root   9 Dec 24 12:31 usb-HUAWEI_TF_CARD_Storage-0:0 -> ../../sda
+pi@raspberrypi ~ $ sudo mount /dev/sr0 /mnt
+
+
+
+//////////////////////////////////////
+查詢 firmware 版本
+strings /boot/start.elf | grep VC_BUILD_ID 
+
+/////////////////////////////
+apt套件管理系統。而根據 apt-get 的手冊，常用的更新指令分別說明如下：
+
+1. 更新 /etc/apt/sources.list 底下的套件清單。
+
+$ sudo apt-get update
+2. 比對套件清單決定是否需要更新，但如果要更新的套件有相依性問題，則放棄更新。
+
+$ sudo apt-get upgrade
+3. 會處理新版本套件與相依性套件的衝突，並試著安裝/移除有問題的套件來完成更新。
+
+$ sudo apt-get dist-upgrade
+4. 刪除之前因為有相依性而安裝，但現在已經不再使用的套件(非必要)。
+
+$ sudo apt-get autoremove
+5. 清除下載到 /var/cache/apt/archives 的 .deb 套件檔(非必要)
+
+$ sudo apt-get autoclean
+6. 更新核心和韌體到最新版本(可能不穩定)，因此更新前一定要先備份重要資料!
+
+$ sudo rpi-update
+
+
+//////////////////////////////////////
+vcgencmd version 查詢 firmware 版本。
+cat /proc/version 查詢更完整的 kernel 資料。
+cat /etc/os-release 查詢 OS 版本資訊。
+cat /etc/debian_version 查詢 Debian 版本編號。
+
+//////////////////////////////////////
+ncdu / 從根目錄開始比較目錄與檔案在磁碟的使用量。
+	//當檔案總管用
+
+dpkg -l 列出已經安裝的套件列表，並用 
+dpkg -l|wc 統計安裝套件數目。
+
+想使用新的 UI，我們可以下幾個指令就可以簡單更新套件。但如果只更新套件，桌面還是會有原本預設的圖示。
+
+pi@raspberrypi:~$ sudo apt-get update
+pi@raspberrypi:~$ sudo apt-get dist-upgrade
+pi@raspberrypi:~$ sudo apt-get install raspberrypi-ui-mods
+
+//////////////////////////////////////
+iw dev 查看支援的頻段
+
+phy#0	Unnamed/non-netdev interface
+		wdev 0x2
+		addr 1a:2a:da:0f:4f:bd
+		type P2P-device
+		txpower 31.00 dBm
+
+Interface wlan0
+		ifindex 3
+		wdev 0x1
+		addr b8:27:eb:fa:21:58
+		ssid P-6101C
+		type managed
+		channel 7 (2442 MHz), width: 20 MHz, center1: 2442 MHz
+		txpower 31.00 dBm
+
+iw list 查看支援的模式。
+
+//////////////////////////////////////
+原本在 Jessie 使用的 ifconfig wlan0 up，在 Scretch 也不能用了，會出現這樣的訊息。
+
+$ sudo ifconfig wlan0 up
+SIOCSIFFLAGS: Operation not possible due to RF-kill
+要改為下面的方式啟用/停用網路裝置。
+
+$ ip link set wlan0 up
+$ ip link set wlan0 down
+或是啟用/停用內建的 WiFi 裝置。
+
+$ sudo rfkill block 0
+$ sudo rfkill unblock 0
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+
+
+
+
+
+aaa
+bbb
+
+ccc
+file:///home/pi/rolex/config.txt.good
+
+
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////// nginx php7 //////////////////////////////
+sudo apt-get update
+sudo apt-get install nginx php7.0-fpm php7.0-cli php7.0-curl php7.0-gd php7.0-mcrypt php7.0-cgi
+
+sudo service php7.0-fpm restart
+
+sudo service nginx start
+/etc/init.d/nginx start
+
+ps -ef | grep nginx
+
+
+ 列出所有名字里含python的安装包：
+
+dpkg-query -l | grep python
+
+// remove
+sudo apt-get remove nginx nginx-common
+sudo apt-get remove php-common
+
+///////////
+sudo vi /etc/nginx/sites-available/default
+///////////
+location / {
+index  index.html index.htm index.php default.html default.htm default.php;
+}
+ 
+location ~\.php$ {
+fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+#fastcgi_pass 127.0.0.1:9000;
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+include fastcgi_params;
+}
+
+///////////
+vi /var/www/html/index.php  //默認的nginx的目錄
+寫下如下內容
+<?php
+phpinfo();
+?>
+
+//////////////////////////////////////
+
+pi@raspberry:~ $ sudo dmesg | grep snd
+[    7.070254] snd_hda_codec_realtek hdaudioC0D2: autoconfig for ALC662 rev1: line_outs=1 (0x14/0x0/0x0/0x0/0x0) type:line
+[    7.070257] snd_hda_codec_realtek hdaudioC0D2:    speaker_outs=0 (0x0/0x0/0x0/0x0/0x0)
+[    7.070260] snd_hda_codec_realtek hdaudioC0D2:    hp_outs=1 (0x1b/0x0/0x0/0x0/0x0)
+[    7.070261] snd_hda_codec_realtek hdaudioC0D2:    mono: mono_out=0x0
+[    7.070263] snd_hda_codec_realtek hdaudioC0D2:    dig-out=0x1e/0x0
+[    7.070264] snd_hda_codec_realtek hdaudioC0D2:    inputs:
+[    7.070266] snd_hda_codec_realtek hdaudioC0D2:      Front Mic=0x19
+[    7.070268] snd_hda_codec_realtek hdaudioC0D2:      Rear Mic=0x18
+[    7.070270] snd_hda_codec_realtek hdaudioC0D2:      Line=0x1a
+pi@raspberry:~ $ 
+
+
+pi@raspberry:~ $ lsmod | grep snd
+snd_hda_codec_realtek    90112  1
+snd_hda_codec_generic    69632  1 snd_hda_codec_realtek
+snd_hda_intel          36864  1
+snd_hda_codec         135168  3 snd_hda_intel,snd_hda_codec_generic,snd_hda_codec_realtek
+snd_hda_core           86016  4 snd_hda_intel,snd_hda_codec,snd_hda_codec_generic,snd_hda_codec_realtek
+snd_hwdep              16384  1 snd_hda_codec
+snd_pcm               110592  3 snd_hda_intel,snd_hda_codec,snd_hda_core
+snd_timer              32768  1 snd_pcm
+snd                    86016  9 snd_hda_intel,snd_hwdep,snd_hda_codec,snd_timer,snd_hda_codec_generic,snd_hda_codec_realtek,snd_pcm
+soundcore              16384  1 snd
+
+
+//////////////////////
+────────────────────── AlsaMixer v1.1.3 ──────────────────────┐
+│ Card: HDA Intel                      F1:  Help               │
+│ Chip: Realtek ALC662 rev1            F2:  System information │
+│ View: Playback                       F6:  Select sound card  │
+│ Item: Master [dB gain: -12.00]       Esc: Exit               │
+│      ┌──┐              ┌──┐     ┌──┐     ┌──┐     ┌──┐       │
+│      │  │              │▒▒│     │  │     │  │     │▒▒│       │
+│      │  │              │▒▒│     │  │     │  │     │▒▒│       →
+│      │  │              │▒▒│     │  │     │  │     │▒▒│       →
+│      │▒▒│              │▒▒│     │  │     │  │     │▒▒│       →
+│      │▒▒│              │▒▒│     │  │     │  │     │▒▒│       →
+│      │▒▒│              │▒▒│     │  │     │  │     │▒▒│       →
+│      │▒▒│              │▒▒│     │  │     │  │     │▒▒│       →
+│      │▒▒│              │▒▒│     │  │     │  │     │▒▒│       │
+│      ├──┤     ┌──┐     ├──┤     ├──┤     └──┘     ├──┤       │
+│      │OO│     │OO│     │OO│     │MM│              │OO│       │
+│      └──┘     └──┘     └──┘     └──┘              └──┘       │
+│       60             100<>100   0<>0     0<>0   100<>100     │
+│   < Master >Headphon  Front   Front Mi Front Mi Surround    
+
+F2: system information
+│      │  │        ┌───── Select File ──────┐ │     │▒▒│       │
+│      │  │        │/proc/asound/version    │ │     │▒▒│       →
+│      │  │        │/proc/asound/cards      │ │     │▒▒│       →
+│      │▒▒│        │/proc/asound/devices    │ │     │▒▒│       →
+│      │▒▒│        │/proc/asound/oss/devices│ │     │▒▒│       →
+│      │▒▒│        │/proc/asound/timers     │ │     │▒▒│       →
+│      │▒▒│        │/proc/asound/pcm        │ │     │▒▒│       →
+│      │▒▒│        └────────────────────────┘
+
+
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+///
+test
+
+
+///
+安裝 deb 檔案
+
+有使用圖型介面的話，就只要用滑鼠點二下 deb 檔
+$ sudo dpkg -i [檔案名稱.deb]
+
+///
+網路重啟
+ sudo ip link set eth0 down
+ sudo ip link set eth0 up
+///
+
+How do I make Bash' tab complete automatically cycle through options OSX
+
+put the following in .bashrc or .bash_login
+bind '"\t":menu-complete'
+
+///
+https://www.howtogeek.com/196655/how-to-configure-the-grub2-boot-loaders-settings/
+
+Edit the GRUB Configuration File
+sudo vi /etc/default/grub
+ GRUB_DEFAULT=saved 
+ GRUB_SAVEDEFAULT=true
+
+
+Make Your Changes Take Effect
+ sudo update-grub 
+ 
+
+///
+
+Again type in the command 'sudo nano /etc/default/motion ' and press enter.
+
+Set ' start_motion_daemon ' to yes. Save and exit.
+
+///
+安裝 bc
+
+
+///
+戶名	邱佳怡	聯豐五金行
+銀行名稱與代號	700-郵局	103-臺灣新光銀行
+分行名稱	豐原中正路郵局	豐原分行
+銀行帳號	01410091224897	0930100061006
+///
+
+修改設定檔 motion.conf 
+
+sudo vi /etc/motion/motion.conf
+
+webcam_localhost = off 
+stream_localhost  off
+
+webcam_port 8081
+# 2017/12/16 新的設定檔已改成以下名稱
+stream_port 8081
+
+# 管理用的連線使用8080 Port
+control_port 8080
+# 2017/12/16 新的設定檔已改成以下名稱
+webcontrol_port 8080
+
+#如果要修改畫面大小，可修改
+# 影像寬度 (pixels). 預設: 320
+width 640
+# 影像高度 (pixels). 預設: 240
+height 480
+
+
+啟動 motion 服務
+$ sudo vi /etc/default/motion 
+ start_motion_daemon=yes
+
+
+中斷Motion.
+ sudo killall -TERM motion
+
+
+
+查詢您的 USB WebCam是否支援Raspberry Pi，可以到以下網站查詢：
+http://elinux.org/RPi_USB_Webcams 
+
+
+framerate: 每秒鐘抓取多少張畫面
+post_capture: 偵測到動作後要儲存多少個畫面
+quality: 畫面的品質
+ffmpeg_output_movies: 偵測到動作後是否要留下影像
+ffmpeg_video_codec: 影像所使用的編碼方式
+stream_quality: 監視影像的品質
+stream_maxrate: 控制監視影像每秒鐘的畫面數量
+
+詳細配置選項的翻譯
+
+表1
+
+ffmpeg_duplicate_frames 除錯模式，只看到變化的影象
+
+選項	Range/Values Default	說明
+auto_brightness	Values: on,off
+Default: off	讓motion自動調節視訊的的亮度，只適用於不帶有自動亮度調節的攝像機
+brightness	Values: 0-255
+Default: 0 (disabled)	調整攝像機的亮度
+saturation	Values: 0 – 255
+Default: 0 (disabled)	調整攝像機的顏色飽和度
+hue	Values: 0 – 255
+Default: 0 (disabled)	調整攝像機的色調
+contrast	Values: 0-255
+Default: 0 (disabled)	調整攝像機的對比度
+daemon	Values: on,off
+Default: off	以守護程序在後臺執行。這個選項只能放在motion.conf，不能放在 thread config file
+emulate_motion	Values: on, off
+Default: off	即使沒有運動物體也要儲存影象
+ffmpeg_output_movies	Values: on, off
+Default: off	是否儲存視訊
+ffmpeg_bps	Values: 0 – 9999999
+Default: 400000	視訊位元率
+ffmpeg_variable_bitrate	Values: 0, 2 -31
+Default: 0 (disabled)	動態位元率，如果開啟這個功能ffmpeg_bps將被忽略，0為關閉，2為最好質量，31為最差質量
+Values: on, off
+Default: on	為了達到每秒的幀數要求，會複製一下幀填充空白時間，關掉這個功能後每個幀都緊接下一個幀，看起來像快進
+ffmpeg_output_debug_movies	Values: on, off
+Default: off
+ffmpeg_video_codec	Values:mpeg4, msmpeg4, swf, flv, ffv1, mov, ogg, mp4, mkv, hevc
+Default: mpeg4	視訊格式
+framerate	Values: 2 – 100
+Default: 100 (no limit)	幀速率，每秒多少幀
+frequency	Values: 0 – 999999
+Default: 0 (Not set)	頻率協調 Hz
+lightswitch	Values: 0 – 100
+Default: 0 (disabled)	忽略光照強度改變引起的變化
+locate_motion_mode	Values: on, off, preview
+Default: off	給運動物體用方框標出
+locate_motion_style	Values: box, redbox, cross, redcross
+Default: box	標記風格
+max_movie_time	Values: 0 (infinite) – 2147483647
+Default: 3600	最大視訊時間
+minimum_frame_time	Values: 0 – 2147483647
+Default: 0	最小幀間隔，設定為0表示採用攝像頭的幀率
+minimum_motion_frames	Values: 1 – 1000s
+Default: 1	捕捉持續至少指定時間的運動幀
+movie_filename	Values: Max 4095 characters
+Default: %v-%Y%m%d%H%M%S	視訊的檔名
+ffmpeg_timelapse	Values: 0-2147483647
+Default: 0 (disabled)	間隔時間，拍攝延時視訊
+ffmpeg_timelapse_mode	Values: hourly, daily, weekly-sunday, weekly-monday, monthly, manual
+Default: daily	延時拍攝模式
+timelapse_filename	Values: Max 4095 characters
+Default: %v-%Y%m%d-timelapse	延時拍攝的檔名
+output_pictures	Values: on,off,first,best,center
+Default: on	是否儲存圖片和模式設定
+output_debug_pictures	Values: on,off
+Default: off	圖片除錯模式，只輸出運動物體
+picture_filename	Values: Max 4095 characters
+Default: %v-%Y%m%d%H%M%S-%q	圖片檔名
+picture_type	Values: jpeg,ppm
+Default: jpeg	圖片型別
+post_capture	Values: 0 – 2147483647
+Default: 0 (disabled)	運動在持續多少幀之後才被捕捉
+pre_capture	Values: 0 – 100s
+Default: 0 (disabled)	輸出影象包括捕捉到運動的前幾秒
+quality	Values: 1 – 100
+Default: 75	jpg影象的質量
+quiet	Values: on, off
+Default: off	安靜模式，檢測到運動不輸出嗶
+rotate	Values: 0, 90, 180, 270
+Default: 0 (not rotated)	旋轉影象角度
+stream_auth_method	Values: 0,1,2
+Default: 0	網頁監控身份認證方法：0-無，1-基本，2-MD5
+stream_authentication	Values: username:password
+Default: Not defined	網頁監控使用者名稱和密碼
+stream_limit	Values: 0 – 2147483647
+Default: 0 (unlimited)	限制幀的數量
+stream_localhost	Values: on, off
+Default: on	是否只能本地訪問網路攝像頭
+stream_maxrate	Values: 1 – 100
+Default: 1	限制網路攝像頭幀速率
+stream_port	Values: 0 – 65535
+Default: 0 (disabled)	網路攝像頭埠
+stream_quality	Values: 1 – 100
+Default: 50	網路攝像頭傳輸質量
+switchfilter	Values: on, off
+Default: off	過濾器開關，過濾器用來區分真正的運動和噪聲
+target_dir	Values: Max 4095 characters
+Default: Not defined = current working directory	視訊和圖片的儲存路徑
+videodevice	Values: Max 4095 characters
+Default: /dev/video0	攝像頭裝置名
+height	Values: Device Dependent
+Default: 288	影象高度，範圍跟攝像機相關
+width	Values: Device Dependent
+Default: 352	影象寬度，範圍跟攝像機相關
+process_id_file	Values: Max 4095 characters
+Default: Not defined	儲存PID的檔案，推薦/var/run/motion.pid
+database_busy_timeout	Values: 0 .. positive integer
+Default: 0	資料庫等待超時時間，毫秒
+
+
+///
+Shell环境变量
+
+PATH 这个变量包含了一系列由冒号分隔开的目录，系统就从这些目录里寻找可执行文件。如果你输入的可执行文件（例如ls、rc-update或者emerge） 不在这些目录中，系统就无法执行它（除非你输入这个命令的完整路径，如/bin/ls）。 
+ROOTPATH 这个变量的功能和PATH相同，但它只罗列出超级用户（root）键入命令时所需检查的目录。 
+LDPATH 这个变量包含了一系列用冒号隔开的目录，动态链接器将在这些目录里查找库文件。
+MANPATH 这个变量包含了一系列用冒号隔开的目录，命令man会在这些目录里搜索man页面。 
+INFODIR 这个变量包含了一系列用冒号隔开的目录，命令info将在这些目录里搜索info页面。 
+PAGER 这个变量包含了浏览文件内容的程序的路径（例如less或者more）。 
+EDITOR 这个变量包含了修改文件内容的程序（文件编辑器）的路径（比如nano或者vi）。 
+KDEDIRS 这个变量包含了一系列用冒号隔开的目录，里面放的是KDE相关的资料。
+CONFIG_PROTECT 这个变量包含了一系列用空格隔开的目录，它们在更新的时候会被Portage保护起来。
+CONFIG_PROTECT_MASK 这个变量包含了一系列用空格隔开的目录，它们在更新的时候不会被Portage保护起来。
+HOME
+HISTSIZE 是指保存历史命令记录的条数。
+LOGNAME 是指当前用户的登录名。
+HOSTNAME 是指主机的名称，许多应用程序如果要用到主机名的话，通常是从这个环境变量中来取得的。
+SHELL 是指当前用户用的是哪种Shell。
+LANG/LANGUGE 是和语言相关的环境变量，使用多种语言的用户可以修改此环境变量。
+MAIL 是指当前用户的邮件存放目录。
+PS1：是基本提示符，对于root用户是#，对于普通用户是$。
+PS2：是附属提示符，默认是“>”。
+
+
+显示环境变量HOME
+$ echo $HOME
+/home/terry
+
+设置一个新的环境变量WELCOME
+$ export WELCOME="Hello!"
+$ echo $WELCOME
+Hello!
+
+env命令显示所有的环境变量
+
+set命令显示所有本地定义的Shell变量
+unset命令来清除环境变量
+
+readonly命令设置只读变量
+$ export TEST="Test..." #增加一个环境变量TEST
+
+$ readonly TEST #将环境变量TEST设为只读
+
+$ unset TEST #会发现此变量不能被删除
+
+-bash: unset: TEST: cannot unset: readonly variable
+
+$ TEST="New" #会发现此也变量不能被修改
+
+-bash: TEST: readonly variable
+
+
+修改 /etc/profile 文件进行环境变量的编辑，是对所有用户有用。
+///
+set -e：若指令传回值不等于0，则立即退出shell。
+
+
+///
+
+
+Raspbian忘記密碼了
+安裝Raspbian、開機、初始設定之後，應該都會修改預設帳號pi的密碼（原本是raspberry），但如果忘記了，怎麼辦呢？
+
+拔出記憶卡，放到其他台電腦裡，修改第一個分割區裡的cmdline.txt，裡頭只有一行，原本內容大概如下：
+dwc_otg.lpm_enable=0 console=ttyAMA0,115200 kgdboc=ttyAMA0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait
+
+在最後面加上「init=/bin/sh」。
+
+然後放回Raspberry Pi開機，應該很快就會出現「#」提示字元，然後輸入底下的指令：
+
+# su  （變成超級使用者）
+# passwd pi  （重新設定帳號pi的密碼）
+# sync  （清空緩衝區，確保設定儲存生效）
+# exec /sbin/init  （執行一般開機後會執行的程序）
+
+然後會看到平常的開機訊息，看到login:後，登入帳號pi，再去修改/boot/cmdline.txt，拿掉之前加入的「init=/bin/sh」。
+
+然後重開機，完工。
+///
+樹莓派（raspberry）啟用root 帳號
+ 由 台灣物聯科技  樹莓派技術文件  2 則討論
+樹莓派使用的linux是debian系統，所以樹莓派啟用root和debian是相同的。
+
+debian裡root帳號默認沒有密碼，但賬帳號鎖定。
+
+當需要root權限時，由默認賬戶經由sudo執行，Raspberry pi 系統中的Raspbian
+默認用戶是pi 密碼為raspberry
+重新開啟root帳號，可由pi用戶登錄後，在命令行下執行
+sudo passwd root
+
+
+
+///
+javascript function內 字串要單引號才行
+printf "<script type="text/javascript">";
+printf "function check_del()";
+printf "{";
+printf "var hi= confirm('Do you really delete?');";
+printf "if (hi== true){";
+printf "return true; ";
+printf "}else{";
+printf "return false; ";
+printf "}";
+printf "}";
+printf "</script>";
+
+
+///
+
+locate_motion_mode = preview
+locate_motion_style = box
+text_right = %Y-%m-%d\n%T-%q
+text_left = rolex
+
+///
+pi:~ $ pinout
+,--------------------------------.
+| oooooooooooooooooooo J8     +====
+| 1ooooooooooooooooooo        | USB
+|                             +====
+|      Pi Model ???V1.3          |
+|      +----+                 +====
+| |D|  |SoC |                 | USB
+| |S|  |    |                 +====
+| |I|  +----+                    |
+|                   |C|     +======
+|                   |S|     |   Net
+| pwr        |HDMI| |I||A|  +======
+`-| |--------|    |----|V|-------'
+
+Revision           : a020d3
+SoC                : BCM2837
+RAM                : 1024Mb
+Storage            : MicroSD
+USB ports          : 4 (excluding power)
+Ethernet ports     : 1
+Wi-fi              : False
+Bluetooth          : False
+Camera ports (CSI) : 1
+Display ports (DSI): 1
+
+J8:
+   3V3  (1) (2)  5V    
+ GPIO2  (3) (4)  5V    
+ GPIO3  (5) (6)  GND   
+ GPIO4  (7) (8)  GPIO14
+   GND  (9) (10) GPIO15
+GPIO17 (11) (12) GPIO18
+GPIO27 (13) (14) GND   
+GPIO22 (15) (16) GPIO23
+   3V3 (17) (18) GPIO24
+GPIO10 (19) (20) GND   
+ GPIO9 (21) (22) GPIO25
+GPIO11 (23) (24) GPIO8 
+   GND (25) (26) GPIO7 
+ GPIO0 (27) (28) GPIO1 
+ GPIO5 (29) (30) GND   
+ GPIO6 (31) (32) GPIO12
+GPIO13 (33) (34) GND   
+GPIO19 (35) (36) GPIO16
+GPIO26 (37) (38) GPIO20
+   GND (39) (40) GPIO21
+
+For further information, please refer to https://pinout.xyz/
+
+
+
+///
+
+沒有防靜電手環，可以嘗試觸控一下水龍頭、金屬水槽或其它類似的東西即可
+
+///
+安裝中文字型
+sudo apt-get install fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
+更改語系
+如要設定語系及系統預設語言，需執行 raspi-config進行設定：
+安裝輸入法
+$ sudo apt-get install scim scim-tables-zh scim-chewing scim-gtk-immodule im-switch
+
+
+
+判讀條碼內容
+ ：一是ZBar，另一套是ZXing
+
+
+
+
+///
+目前溫度
+vcgencmd measure_temp
+
+
+///
+ Raspberry Pi 4
+《特色》
+1. 使用 Broadcom 2711 四核心晶片(原本為 BCM2837B0)Quad-core Cortex-A72 64-bit SoC，單核心時脈可達 1.5GHz，有三倍速快。
+2. 三種記憶體(LPDDR4 SDRAM)大小可選擇，分別是 1GB, 2GB, 和 4GB。
+3. 乙太網路(Ethernet)達 True Gigabit Ethernet。
+4. 支援藍牙5.0(Bluetooth 5.0)。
+5. 兩個 USB 3.0 和 兩個 USB 2.0。
+6. 支援雙銀幕輸出，解析度可達 4K。
+7. 使用 VideoCore VI，可支援 OpenGL ES 3.x。
+8. 可硬體解 4Kp60 HEVC 影片。
+
+電源接頭從 USB micro-B 改成使用 USB-C，使用 5V/3A 以上電源供應器才能穩定使用。
+視訊接頭從 type-A(full-size) HDMI 接頭改為兩個 type-D (micro) HDMI 接頭。
+乙太網路可支援 Full-throughput Gigabit 速度，並和 USB 接頭位置對調，簡化佈線的困難度。由於 USB 和 Ethernet 分別使用 VL805 和 BCM54213PE 控制，因此可使用全速的 USB3.0 和 Gigabit 頻寬。
+
+///
+ Raspberry Pi 4
+《特色》
+1. 使用 Broadcom 2711 四核心晶片(原本為 BCM2837B0)Quad-core Cortex-A72 64-bit SoC，單核心時脈可達 1.5GHz，有三倍速快。
+2. 三種記憶體(LPDDR4 SDRAM)大小可選擇，分別是 1GB, 2GB, 和 4GB。
+3. 乙太網路(Ethernet)達 True Gigabit Ethernet。
+4. 支援藍牙5.0(Bluetooth 5.0)。
+5. 兩個 USB 3.0 和 兩個 USB 2.0。
+6. 支援雙銀幕輸出，解析度可達 4K。
+7. 使用 VideoCore VI，可支援 OpenGL ES 3.x。
+8. 可硬體解 4Kp60 HEVC 影片。
+
+電源接頭從 USB micro-B 改成使用 USB-C，使用 5V/3A 以上電源供應器才能穩定使用。
+視訊接頭從 type-A(full-size) HDMI 接頭改為兩個 type-D (micro) HDMI 接頭。
+乙太網路可支援 Full-throughput Gigabit 速度，並和 USB 接頭位置對調，簡化佈線的困難度。由於 USB 和 Ethernet 分別使用 VL805 和 BCM54213PE 控制，因此可使用全速的 USB3.0 和 Gigabit 頻寬。
+
+
+
+
+///
+
+
+https://youtu.be/d0tp_v6cqQg
+///
+
+無法連上這個網站 https://www.youtube.com/watch?v=4J1qhZuJe6M&pbjreload=10 的網頁可能暫時離線，或是已經遷移到另一個網址。
+ERR_NAME_RESOLUTION_FAILED
+
+///
+
+https://accounts.thingiverse.com/
+callmelittlewang@gmail.com
+rthingiverse
+
+///
+
+TF卡启动，C10卡的读写速度目前只有10~30M/s。
+
+///
+Chromium
+版本 72.0.3626.121 (正式版本) Built on Raspbian , running on Raspbian 9.9 (32 位元)
+
+
+///
+pi@raspberrypi:~/rolex $ ps -axj
+ PPID   PID  PGID   SID TTY      TPGID STAT   UID   TIME COMMAND
+    0     1     1     1 ?           -1 Ss       0   0:02 /sbin/init splash
+    0     2     0     0 ?           -1 S        0   0:00 [kthreadd]
+    2     3     0     0 ?           -1 I<       0   0:00 [rcu_gp]
+    2     4     0     0 ?           -1 I<       0   0:00 [rcu_par_gp]
+
+kill -9 <pid>
+kill -kill <pid>
+kill -s SIGKILL <pid>
+
+///
+Specifying a screen resolution for a virtual desktop
+
+vncserver -randr=800x600
+vncserver -randr=1440x900
+
+
+///
+使用遠端桌面兩種常用的方法，
+VNC以及Xrdp。
+
+關掉特定的桌面，1 號DISPLAY。
+vncserver -kill :1
+
+開一個Full HD的桌面2
+vncserver -geometry 1920x1080 :2
+
+查一下這個vnc viewer連到的桌面
+echo $DISPLAY
+
+設定新的密碼
+vncpasswd
+刪除舊的密碼
+rm -rf passwd
+
+///
+使用Xrdp
+
+sudo apt-get install xrdp -y
+
+///
+raspbain x86上安裝vncviewer
+
+https://www.realvnc.com/en/connect/download/viewer/ 
+ linux/deb x86
+
+dpkg -i VNC-Viewer-6.19.715-Linux-x86.deb
+
+vncviewer 192.168.1.66:1
+
+
+///
+Lemel電腦
+pi@raspberry:~ $ cat /proc/cpuinfo 
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Pentium(R) Dual-Core  CPU      E5200  @ 2.50GHz
+stepping	: 6
+microcode	: 0x60f
+cpu MHz		: 1200.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 10
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl est tm2 ssse3 cx16 xtpr pdcm lahf_lm kaiser dtherm
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf
+bogomips	: 4999.84
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Pentium(R) Dual-Core  CPU      E5200  @ 2.50GHz
+stepping	: 6
+microcode	: 0x60f
+cpu MHz		: 2500.000
+cache size	: 2048 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 10
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl est tm2 ssse3 cx16 xtpr pdcm lahf_lm kaiser dtherm
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf
+bogomips	: 4999.84
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+///
+
+Where does Chrome store extensions?
+
+
+Storage Location for Packed Extensions
+Navigate to chrome://version/ and look for Profile Path, it is your default directory and Extensions Folder is where all the extensions, apps, themes are stored
+
+Windows
+If my Profile Path is %userprofile%\AppData\Local\Google\Chrome\User Data\Default then my storage directory is:
+
+C:\Users\<Your_User_Name>\AppData\Local\Google\Chrome\User Data\Default\Extensions 
+Linux
+~/.config/google-chrome/Default/Extensions/
+MacOS
+~/Library/Application\ Support/Google/Chrome/Default/Extensions
+Chromium
+~/.config/chromium/Default/Extensions
+
+///
+BitTorrent clients 
+ Transmission
+
+
+///
+
+pi 4
+dc:a6:32:1b:83:32
+
+///
+edimax
+	74:DA:38:E3:0E:40
+
+
+///
+解壓 中文文件
+unar file.zip
+
+
+
+
+///
+//查找檔案 find in file
+find . -name '*.ppp' -exec grep 'meal' {} \;
+
+find . | grep '擁有'
+User/rolexMsg/@天才的13个思维工具.txt:道理，擁有知識而不懂思維方法的人
+User/Msg/@如何衡量萬事萬物.txt: 你擁有的資料多過你所想像的
+User/Msg/@如何衡量萬事萬物.txt: 你擁有的資料多過你所想像的
+User/學測指考7000單字/@7000_6.txt:[v.擁有]
+
+
+///
+Google定下安卓手機新規格 「快速充電器」要統一了
+新的智慧型手機與USB-C PD充電器相容
+
+///
+
+sudo systemctl status ssh
+
+///
+
+zram
+
+script to enable zram
+
+Download the script and copy to /usr/bin/ folder
+
+sudo wget -O /usr/bin/zram.sh https://raw.githubusercontent.com/ric96/zram/master/zram.sh
+make file executable
+
+sudo chmod +x /usr/bin/zram.sh
+edit /etc/rc.local file to run script on boot
+
+sudo nano /etc/rc.local
+add line before exit 0
+
+/usr/bin/zram.sh &
+
+///
+會lag
+https://www.youtube.com/watch?v=JhvWZCTKahE
+
+
+///
+
+
+由於 MBR 分割表不支援超過 2TB 的磁碟，如果您的硬碟大小超過 2TB，就無法使用 fdisk 分割硬碟，請改用 parted 以 GPT 的方式分割，教學請參考 Linux 的 Parted 指令教學。
+///
+How To Burn .Iso To USB Drive
+
+dd if=ubuntu-12.04.2-server-i386.iso of=/dev/sdb bs=4M 
+///
+
+
+
+dpkg-reconfigure locales 
+zh_TW //X11重新進入後變中文化
+
+從系統選單，啟動 fcitx設定，把嘸蝦米加入
+
+
+
+建立檔案:/etc/X11/Xsession.d/95im_init
+export LANG=zh_CN.UTF-8
+export LC_CTYPE=zh_CN.UTF-8
+export XMODIFIERS=@im=fcitx
+fcitx & 
+
+
+// ifconfig和netstatd 指令代替
+ifconfig 改用 ip addr
+#查看介面傳輸狀態 -s 是詳細顯示
+$ ip -s link
+
+ netstat 改用 ss
+
+netstat 是很重要的連線觀察工具，使用新的指令ss來取代，功能也是差不多。
+	
+$ #TCP listen
+$ ss -lt
+$ #UDP listen
+$ ss -ul
+$ #TCP 連線
+$ ss -t
+
+traceroute/traceroute6 改成 tracepath
+	
+$ tracepath 168.95.1.1
+
+ route 改為 ip -route
+
+
+介面開關
+$ ifconfig eth1 up
+$ ifconfig eth1 down
+改為
+$ ip link set eth1 up
+$ ip link set eth1 down
+
+
+
+//Linux 找不到 ifconfig wget 指令
+
+sudo apt-cache search ifconfig
+ifconfig
+
+
+/////////////missing firmware is “rtl8192cufw.bin” //////////////
+Missing firmwares are often non-free , so unless you are sure that it’s not the case, add them in your /etc/apt/sources.list :
+
+deb http://deb.debian.org/debian stretch main contrib non-free
+deb-src http://deb.debian.org/debian stretch main contrib non-free
+
+apt-get update
+
+sudo apt-cache search rtl8192cufw.bin
+firmware-realtek - Binary firmware for Realtek wired/wifi/BT adapters
+
+
+
+sudo apt-get install firmware-realtek
+
+////////////////////
+
+查詢系統硬碟的 UUID
+blkid # 建議用此方法, 可以查到最完整的資訊 (blkid /dev/sda1 # 查詢單一磁區)
+
+    /dev/sda1: UUID="7f54f33c-bffe-008b-6e81-9f4fac92e42a" UUID_SUB="5fe83019-0f46-b114-35e6-63ca4ee7d5a6" LABEL="web:0" TYPE="linux_raid_member"
+    /dev/sda2: UUID="97e5c775-cb92-4f24-bb9c-95f4d6d3a416" TYPE="swap"
+
+
+How do I change swap partition in Linux
+swapoff /dev/hda3
+mkswap /dev/hda4
+swapon /dev/hda4
+
+and edit swap entry in /etc/fstab
+
+
+
+To extract nginx_1.10.0-0ubuntu0.16.04.4_all.deb, run:
+$ ar vx nginx_1.10.0-0ubuntu0.16.04.4_all.deb
+
+Extract files from control.tar.gz and data.tar.gz
+Type the following tar command:
+$ tar xvf control.tar.gz
+$ tar xvf data.tar.gz
+
+
+or   .... To extract htop_2.0.1-1ubuntu1_amd64.deb in the current directory run:
+$ dpkg-deb -xv htop_2.0.1-1ubuntu1_amd64.deb .
+
+/////////////////////////////////////
+
+Installed systemd unit for VNC Server in Virtual Mode daemon
+Start or stop the service with:
+  systemctl (start|stop) vncserver-virtuald.service
+Mark or unmark the service to be started at boot time with:
+  systemctl (enable|disable) vncserver-virtuald.service
+
+
+pi@raspberry:~ $ sudo fdisk -l /dev/sda 
+Disk /dev/sda: 149.1 GiB, 160040803840 bytes, 312579695 sectors
+Disk model: Hitachi HDS72161
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x396c396b
+
+所用裝置   可開機     Start      結束      磁區   Size Id 類型
+/dev/sda1              2048   1953791   1951744   953M 82 Linux 交換區/ Solaris
+/dev/sda2  *        1953792  60547071  58593280    28G 83 Linux
+/dev/sda3          60549118 312578047 252028930 120.2G  5 延伸
+/dev/sda5          60549120 123463679  62914560    30G 83 Linux
+/dev/sda6         123467776 246509567 123041792  58.7G 83 Linux
+
+tesseract/INSTALL
+Basic Installation
+==================
+
+   These are generic installation instructions. First you need to run
+`./autogen.sh', that creates `configure' script.
+
+sudo apt-get install -y libtesseract-dev libleptonica-dev tesseract-ocr-eng
+
+
+$ make
+$ sudo make install
+$ sudo ldconfig
+
+
+these lines in .pro for Ubuntu:
+
+INCLUDEPATH += /usr/local/include/tesseract
+INCLUDEPATH += /usr/local/include/leptonica
+LIBS += -ltesseract -llept
+
+
+
+
+
+/// Chrome 快速鍵
+按下 Ctrl 鍵，然後按一下連結。 在背景的新分頁中開啟連結。
+
+Ctrl+F4 鍵	關閉目前的分頁或彈出式視窗。
+
+Ctrl+1 鍵至 Ctrl+8 鍵	切換至分頁列上特定編號位置的分頁。
+Ctrl+9 鍵	切換至最後一個分頁。
+Ctrl+Tab 鍵或 Ctrl+PgDown 鍵	切換至下一個分頁。
+Ctrl+Shift+Tab 鍵或 Ctrl+PgUp 鍵	切換至上一個分頁。
+
+/// YouTube快捷鍵 
+
+暫停/開始播放
+K 👉暫停/開始播放
+空白鍵👉暫停/開始播放 (已選擇播放列情況下)
+
+
+播放速度調整
+Shift+＜👉播放速度降低0.25倍速
+Shift+＞👉播放速度增加0.25倍速
+
+C👉開CC字幕
+F👉關閉/開啟全螢幕 (Full Screen)
+
+
+
+1公頃 = 1.031034 甲
+1公頃 = 3025坪
+1公頃 = 10 000 平方公尺（square meters，100公尺×100公尺）
+1公頃 = 100公畝（ares，公頃的英文字頭hect- 就是「一百」之意）
+1公頃 = 15 畝
+
+///////////////////////////
+
+
+QT slot 呼叫方式 
+1 隱式
+自動呼叫Qt中“connectSlotsByName”即“按空間名稱關聯槽”的方式進行關聯，
+對應的函式必須寫成“on_控制元件名_訊號名”的格式；
+
+2顯式
+connect(limage[0], SIGNAL(clicked()), this, SLOT(mylabel_clicked()));
+如果採用顯式 connect的方法的同時，又將槽函式的名字起成了“on_控制元件名_訊號名”的格式，
+那麼就會在執行時彈出 “QMetaObject::connectSlotsByName: No matching signal for”的警告了！
+
+
+
+3軸plotter
+
+
+KM-Laser gcode plugin for making hatsch infill in Inkscape: 
+https://github.com/KnoxMakers/KM-Laser
+ get outline from image/ 
+ extension/ KMLLASER / generate hatch fill
+
+
+JTech extension
+ edit laser.py header/footer
+ 
+//header gcode:
+G28
+G90
+G0 Z20
+M117 Deploy Pen NOW! 10
+G4 P1000
+M117 Drawing..
+
+ 
+//footer gcode:
+G0 Z20
+G28 X0 Y0
+M18
+ 
+inkscape / text
+object to path
+select all
+fill and strokes/ fill no paint / stroke paint
+
+extension/ Generate Laser Gcode/JTech
+Laser ON: G1 Z0 F40;
+Laser OF: G1 Z0.5 F40;
+
+apply
+change base cordinate (0.0; 0.0; 0.0;) ()
+
+
+/////////////////
+inkscape 
+ vector line/square.start ...
+  jtech
+ image outline / trace bitmap / object to path / jtech
+ image hatch fill  / trace bitmap / object to path / on fill , flat stroke color
+    km hatch fill / remove image outline object / save hatch fill object
+
+//////// grbl rev/mm setting
+pully 20 teeth
+belt  1 teeth/pitch 2 mm
+
+motor
+360/1.8=200 turns/rev
+
+reduction/gear
+1:1
+
+parametic
+  200/40 = 5 turns/mm
+  
+  
+
+
+倚蠅戰術
+fallsafe失效保護
+
+
+显示器又坏了
+ 更換高壓驅動板  led燈條
+ 
+ 
+ GRBL shield v3.0，
+  這是一塊擴充板可以疊在燒錄好GRBL的UNO板上，方便進行機器的配線以及調整。
+  與其叫它擴充板我其實比較傾向於稱呼它為轉接板，
+  因為它的功能就是把所有GRBL上的腳位給拉出來，同時把A4988的工作電與訊號電整理好。
+  
+右邊那排黑色的接腳，那排全部都是GND，而旁邊白色的則是對應的接腳。
+X+與X-(X軸限位開關)對應Arduino D9
+Y+與Y-(Y軸限位開關)對應Arduino D10
+Z+與Z-(Z軸限位開關)對應Arduino D11
+SpnEn(主軸開關)對應Arduino D12
+SpnDir(主軸旋轉方向)對應Arduino D13
+CoolEn(冷卻液開關)對應Arduino A3
+Abort(停止開關)對應Arduino A0
+Hold(暫停開關)對應Arduino A1
+Resume(啟動/繼續)對應Arduino A2
+E-STOP(緊急停止)對應到Arduino RES(也就是RESET腳)
+  
+
+ RAMPS1.4(3D印表機所使用的驅動板)
+
+
+coreXY的控制基本上是這樣(L為左邊的馬達，R為右邊的馬達)。
+X+移動 :L逆時針；R逆時針
+X- 移動 :L順時針；R順時針
+Y+移動 :L順時針；R逆時針
+Y- 移動 :L逆時針；R順時針
+
+立著印 印出來的固定圓銷形狀幾乎像橢圓型
+
+AxiDraw
+ 使用鋁擠型搭配V型滑輪當作滑軌
+ 
+ J Tech Photonics Laser Tool來產生Gcode
+  grbl 2軸加servo
+ 
+
+
+sed 文字的資料處理
+ sed 最基礎的用法為命令〝s〞字串取代,如 sed s/OLD/NEW/ 為子串〝NEW〞取代〝OLD〞。
+
+例:
+$ echo 'good morning google' | sed s/o/O/ ←將字串小寫〝o〞改大寫〝O〞
+gOod morning google
+
+將 filename 檔案內的 Giga 字串取代成 GigaRama
+sed s/Giga/GigaRama/ filename
+但是我們這樣只能做 stdout 
+
+
+sed -n '/xfish/w file2' file
+萬用字元的使用，將 file 檔案內的 xfis? 哪一行寫到 file2 內
+
+

@@ -1,0 +1,40 @@
+
+
+
+
+Quick setup — if you’ve done this kind of thing before
+or	
+HTTPS
+SSH
+https://github.com/atraderms96/git_test.git
+Get started by creating a new file or uploading an existing file. We recommend every repository include a README, LICENSE, and .gitignore.
+
+…or create a new repository on the command line
+echo "# git_test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/atraderms96/git_test.git
+git push -u origin master
+                
+…or push an existing repository from the command line
+git remote add origin https://github.com/atraderms96/git_test.git
+git push -u origin master
+…or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
+
+
+$ git config --global user.name "<使用者名字>" atraderms96
+$ git config --global user.email "<電子信箱>" atrader@ms96.url.com.tw
+
+這個 README.md 是 GitHub 專案的預設說明頁面，附檔名 .md 表示它是一個 Markdown 格式，Markdown 語法可以很輕鬆的把純文字格式轉換成 HTML 的網頁格式
+
+預設的遠端節點就會叫 origin
+
+
+
+
+
+
